@@ -31,8 +31,36 @@
             $query_str = "INSERT INTO prijave(predmet, katedra, sala, datum) VALUES ('$prijava->predmet', '$prijava->katedra', '$prijava->sala', '$prijava->datum')";
             return $conn->query($query_str);
         }
+    public static function getById($id, mysqli $conn)
+{
+    
+    $query_string = "SELECT * FROM prijave WHERE id = $id";
+    $result = $conn->query($query_string);
+    
+    if ($result) {
+        return $result->fetch_assoc();
+    } else {
+        return null; 
+    }
+}
+public static function update(Prijava $prijava, mysqli $conn)
+{
+    
+    $query_string = "
+        UPDATE prijave 
+        SET predmet = '$prijava->predmet', 
+            katedra = '$prijava->katedra', 
+            sala = '$prijava->sala', 
+            datum = '$prijava->datum' 
+        WHERE id = $prijava->id";
 
-
+    
+    if ($conn->query($query_string) === TRUE) {
+        return true; 
+    } else {
+        return false; 
+    }
+    }
 }
 
 
